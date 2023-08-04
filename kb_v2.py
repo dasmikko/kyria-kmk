@@ -1,5 +1,7 @@
+import board
+
 from kmk.kmk_keyboard import KMKKeyboard as _KMKKeyboard
-from kmk.quickpin.pro_micro.boardsource_blok import pinout as pins
+from kmk.quickpin.pro_micro.sparkfun_promicro_rp2040 import pinout as pins
 from kmk.scanners import DiodeOrientation
 from kmk.scanners import intify_coordinate as ic
 
@@ -19,8 +21,6 @@ class KMKKeyboard(_KMKKeyboard):
     diode_orientation = DiodeOrientation.COL2ROW
     data_pin = pins[1]
     rgb_pixel_pin = pins[0]
-    encoder_pin_0 = pins[19]
-    encoder_pin_1 = pins[20]
 
     coord_mapping = []
     coord_mapping.extend(ic(0, x, 8) for x in range(6))
@@ -31,3 +31,5 @@ class KMKKeyboard(_KMKKeyboard):
     coord_mapping.extend(ic(6, x, 8) for x in range(7, -1, -1))
     coord_mapping.extend(ic(3, x, 8) for x in range(3, 8))
     coord_mapping.extend(ic(7, x, 8) for x in range(7, 2, -1))
+    
+    print(coord_mapping)

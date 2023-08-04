@@ -1,4 +1,4 @@
-from kyria_v1_rp2040 import KMKKeyboard
+from kb import KMKKeyboard
 
 from kmk.extensions.media_keys import MediaKeys
 from kmk.extensions.rgb import RGB, AnimationModes
@@ -19,30 +19,18 @@ keyboard.extensions.append(MediaKeys())
 split = Split(split_type=SplitType.UART, use_pio=True)
 keyboard.modules.append(split)
 
-# Uncomment below if you're using encoder
-encoder_handler = EncoderHandler()
-encoder_handler.pins = ((keyboard.encoder_pin_0, keyboard.encoder_pin_1, None, False),)
-
-# Uncomment below if you're having RGB
-rgb_ext = RGB(
-    pixel_pin=keyboard.rgb_pixel_pin,
-    num_pixels=10,
-    animation_mode=AnimationModes.BREATHING_RAINBOW,
-)
-keyboard.extensions.append(rgb_ext)
-
 # Edit your layout below
 # Currently, that's a default QMK Kyria Layout - https://config.qmk.fm/#/splitkb/kyria/rev1/LAYOUT
-ESC_LCTL = KC.HT(KC.ESC, KC.LCTL)
-QUOTE_RCTL = KC.HT(KC.QUOTE, KC.RCTL)
-ENT_LALT = KC.HT(KC.ENT, KC.LALT)
-MINUS_RCTL = KC.HT(KC.MINUS, KC.RCTL)
+ESC_LCTL = KC.TRANS
+QUOTE_RCTL = KC.TRANS
+ENT_LALT = KC.TRANS
+MINUS_RCTL = KC.TRANS
 keyboard.keymap = [
     [
         KC.TAB,        KC.Q,          KC.W,          KC.E,          KC.R,          KC.T,                                                                      KC.Y,          KC.U,          KC.I,          KC.O,          KC.P,          KC.BSPC,
         ESC_LCTL,      KC.A,          KC.S,          KC.D,          KC.F,          KC.G,                                                                      KC.H,          KC.J,          KC.K,          KC.L,          KC.SCLN,       QUOTE_RCTL,
         KC.LSFT,       KC.Z,          KC.X,          KC.C,          KC.V,          KC.B,          KC.LBRC,       KC.CAPS,       KC.MO(5),      KC.RBRC,       KC.N,          KC.M,          KC.COMM,       KC.DOT,        KC.SLSH,       KC.RSFT,
-                                                     KC.MO(6),      KC.LGUI,       ENT_LALT,      KC.SPC,        KC.MO(3),      KC.MO(4),      KC.SPC,        KC.RALT,       KC.RGUI,       KC.APP,
+                                                     KC.I,      KC.LGUI,       ENT_LALT,      KC.SPC,        KC.MO(3),      KC.MO(4),      KC.SPC,        KC.RALT,       KC.RGUI,       KC.APP,
     ],
     [
         KC.TAB,        KC.QUOT,       KC.COMM,       KC.DOT,        KC.P,          KC.Y,                                                                      KC.F,          KC.G,          KC.C,          KC.R,          KC.L,          KC.BSPC,
@@ -81,19 +69,6 @@ keyboard.keymap = [
                                                      KC.TRNS,       KC.TRNS,       KC.TRNS,       KC.TRNS,       KC.TRNS,       KC.TRNS,       KC.TRNS,       KC.TRNS,       KC.TRNS,       KC.TRNS,
     ],
 ]
-
-# Uncomment below if using an encoder
-# Edit your encoder layout below
-encoder_handler.map = (
-    ((KC.VOLD, KC.VOLU),),
-    ((KC.VOLD, KC.VOLU),),
-    ((KC.VOLD, KC.VOLU),),
-    ((KC.MPRV, KC.MNXT),),
-    ((KC.MPRV, KC.MNXT),),
-    ((KC.MPRV, KC.MNXT),),
-    ((KC.MPRV, KC.MNXT),),
-)
-keyboard.modules.append(encoder_handler)
 
 if __name__ == '__main__':
     keyboard.go()
