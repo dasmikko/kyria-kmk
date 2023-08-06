@@ -18,6 +18,21 @@ class KMKKeyboard(_KMKKeyboard):
         pins[13],
     )
     row_pins = (pins[17], pins[16], pins[15], pins[14])
+    '''
+    Right side pins:
+    col_pins = (
+        pins[10],
+        pins[11],
+        pins[12],
+        pins[13],
+        pins[14],
+        pins[15],
+        pins[16],
+        pins[17],
+    )
+    row_pins = (pins[6], pins[7], pins[8], pins[9])
+    '''
+    
     diode_orientation = DiodeOrientation.COL2ROW
     data_pin = pins[1]
     rgb_pixel_pin = pins[0]
