@@ -4,9 +4,48 @@ from kmk.kmk_keyboard import KMKKeyboard as _KMKKeyboard
 from kmk.quickpin.pro_micro.sparkfun_promicro_rp2040 import pinout as pins
 from kmk.scanners import DiodeOrientation
 from kmk.scanners import intify_coordinate as ic
+from storage import getmount
+
+isLeftSide = False if str(getmount('/').label)[-1] == 'R' else True
+leftColPins = (
+        pins[6],
+        pins[7],
+        pins[8],
+        pins[9],
+        pins[10],
+        pins[11],
+        pins[12],
+        pins[13],
+    )
+leftRowPins = (pins[17], pins[16], pins[15], pins[14])
+
+rightColPins = (
+        pins[10],
+        pins[11],
+        pins[12],
+        pins[13],
+        pins[14],
+        pins[15],
+        pins[16],
+        pins[17],
+    )
+rightRowPins = (pins[6], pins[7], pins[8], pins[9])
+
+
+colPins = ()
+rowPins = ()
+
+if isLeftSide:
+    colPins = leftColPins
+    rowPins = leftRowPins
+else:
+    colPins = rightColPins
+    rowPins = rightRowPins
 
 
 class KMKKeyboard(_KMKKeyboard):
+    SDA = pins[4]
+    SCL = pins[5]
     col_pins = (
         pins[6],
         pins[7],
@@ -18,35 +57,11 @@ class KMKKeyboard(_KMKKeyboard):
         pins[13],
     )
     row_pins = (pins[17], pins[16], pins[15], pins[14])
-    '''
-    Right side pins:
-    col_pins = (
-        pins[10],
-        pins[11],
-        pins[12],
-        pins[13],
-        pins[14],
-        pins[15],
-        pins[16],
-        pins[17],
-    )
-    row_pins = (pins[6], pins[7], pins[8], pins[9])
-    '''
-    
     diode_orientation = DiodeOrientation.COL2ROW
     data_pin = pins[1]
     rgb_pixel_pin = pins[0]
 
-    coord_mapping = []
-    #coord_mapping.extend(ic(0, x, 8) for x in range(6))
-    #coord_mapping.extend(ic(4, x, 8) for x in range(5, -1, -1))
-    #coord_mapping.extend(ic(1, x, 8) for x in range(6))
-    #coord_mapping.extend(ic(5, x, 8) for x in range(5, -1, -1))
-    #coord_mapping.extend(ic(2, x, 8) for x in range(8))
-    #coord_mapping.extend(ic(6, x, 8) for x in range(7, -1, -1))
-    #coord_mapping.extend(ic(3, x, 8) for x in range(2, 7))
-    #coord_mapping.extend(ic(7, x, 8) for x in range(7, 2, -1))
-    
+    coord_mapping = []    
     coord_mapping = [
         0,   1,  2,  3,  4,  5,                         34, 35, 36, 37, 38, 39, 
         8,   9, 10, 11, 12, 13,                         42, 43, 44, 45, 46, 47, 

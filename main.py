@@ -6,17 +6,33 @@ from kmk.keys import KC
 from kmk.modules.encoder import EncoderHandler
 from kmk.modules.holdtap import HoldTap
 from kmk.modules.layers import Layers
-from kmk.modules.split import Split, SplitType
+from kmk.modules.split import Split, SplitType, SplitSide
+from kmk.extensions.RGB import RGB, AnimationModes
 
 keyboard = KMKKeyboard()
-keyboard.debug_enabled = True
+keyboard.debug_enabled = False
 
 keyboard.modules.append(Layers())
 keyboard.modules.append(HoldTap())
 keyboard.extensions.append(MediaKeys())
 
+
+rgb = RGB(
+    pixel_pin=keyboard.rgb_pixel_pin,
+    num_pixels=10,
+    val_default=255,
+    animation_mode=AnimationModes.BREATHING_RAINBOW,
+)
+keyboard.extensions.append(rgb)
+
+
+
 # Using drive names (KYRIAL, KYRIAR) to recognize sides; use split_side arg if you're not doing it
-split = Split(split_type=SplitType.UART, use_pio=True)
+split = Split(
+    split_flip=True,
+    split_type=SplitType.UART,
+    data_pin=keyboard.data_pin,
+    use_pio=True)
 keyboard.modules.append(split)
 
 # Edit your layout below
@@ -28,9 +44,9 @@ MINUS_RCTL = KC.TRANS
 keyboard.keymap = [
     [
         KC.TAB,        KC.Q,          KC.W,          KC.E,          KC.R,          KC.T,                                                                      KC.Y,          KC.U,          KC.I,          KC.O,          KC.P,          KC.BSPC,
-        ESC_LCTL,      KC.A,          KC.S,          KC.D,          KC.F,          KC.G,                                                                      KC.H,          KC.J,          KC.K,          KC.L,          KC.SCLN,       QUOTE_RCTL,
-        KC.LSFT,       KC.Z,          KC.X,          KC.C,          KC.V,          KC.B,          KC.LBRC,       KC.CAPS,       KC.MO(5),      KC.RBRC,       KC.N,          KC.M,          KC.COMM,       KC.DOT,        KC.SLSH,       KC.RSFT,
-                                                     KC.I,          KC.LGUI,       KC.LALT,       KC.SPC,        KC.MO(3),      KC.MO(4),      KC.SPC,        KC.RALT,       KC.RGUI,       KC.APP,
+        KC.LSFT,       KC.A,          KC.S,          KC.D,          KC.F,          KC.G,                                                                      KC.H,          KC.J,          KC.K,          KC.L,          KC.SCLN,       KC.ENT,
+        KC.LCTL,       KC.Z,          KC.X,          KC.C,          KC.V,          KC.B,          KC.LBRC,       KC.CAPS,       KC.MO(5),      KC.RBRC,       KC.N,          KC.M,          KC.COMM,       KC.DOT,        KC.SLSH,       KC.RSFT,
+                                                     KC.LGUI,          KC.LGUI,       KC.LALT,       KC.SPC,        KC.MO(3),      KC.MO(4),      KC.SPC,        KC.RALT,       KC.RGUI,       KC.APP,
     ],
     [
         KC.TAB,        KC.QUOT,       KC.COMM,       KC.DOT,        KC.P,          KC.Y,                                                                      KC.F,          KC.G,          KC.C,          KC.R,          KC.L,          KC.BSPC,
